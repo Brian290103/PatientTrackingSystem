@@ -7,15 +7,16 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:paddingBottom="0dp"
-    tools:openDrawer="start"
-    tools:context=".Dashboard">
+    tools:context=".Dashboard"
+    tools:openDrawer="start">
 
     <com.google.android.material.navigation.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
         android:id="@+id/nav_view"
+        android:layout_width="350dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
         app:headerLayout="@layout/header"
-        app:menu="@menu/main_menu" android:layout_gravity="start"/>
+        app:menu="@menu/main_menu" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -45,17 +46,19 @@
                 app:srcCompat="@drawable/ic_baseline_menu_bars_24" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/btn_notifications"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
+                android:background="@drawable/ds1_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView4"
+                app:layout_constraintEnd_toStartOf="@+id/logout_btn"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_notifications_24" />
 
+
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/logout_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -72,8 +75,7 @@
             app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar">
-   </FrameLayout>
+            app:layout_constraintTop_toBottomOf="@id/toolbar"></FrameLayout>
 
         <LinearLayout
             android:id="@+id/bottom_navigation"

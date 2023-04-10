@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ViewAppointment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:foregroundGravity="center_vertical"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/baseline_person_242"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Name:"
+                android:textColor="@color/bright_blue"
+                android:textSize="20dp"
+                app:drawableTint="@color/bright_blue" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:letterSpacing=".1"
+                android:text="Brian Saitabau"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/baseline_access_time_filled_24"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Date $ Time:"
+                android:textColor="@color/bright_blue"
+                android:textSize="20dp"
+                app:drawableTint="@color/bright_blue" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:letterSpacing=".1"
+                android:text="23-09-2023 02:45:34"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Description:"
+                android:textColor="@color/bright_blue"
+                android:textSize="20dp"
+                app:drawableStartCompat="@drawable/baseline_format_list_numbered_24"
+                app:drawableTint="@color/bright_blue" />
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:inputType="textMultiLine"
+                android:letterSpacing=".1"
+                android:text="23-09-2023 02:45:34\n23-09-2023 02:45:34\n23-09-2023 02:45:34\n23-09-2023 02:45:34\n23-09-2023 02:45:34\n"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView28"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/baseline_format_list_numbered_24"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Dr's. Comments:"
+                android:textColor="@color/bright_blue"
+                android:textSize="20dp"
+                app:drawableTint="@color/bright_blue" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:inputType="textMultiLine"
+                android:letterSpacing=".1"
+                android:text="23-09-2023 02:45:34\n23-09-2023 02:45:34\n23-09-2023 02:45:34\n23-09-2023 02:45:34\n23-09-2023 02:45:34\n"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/bold_red"
+                    android:drawableEnd="@drawable/baseline_close_24"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:paddingStart="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="10dp"
+                    android:text="Decline"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textSize="16sp"
+                    app:cornerRadius="200dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#009688"
+                    android:drawableEnd="@drawable/baseline_check_24"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:paddingStart="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="10dp"
+                    android:text="Approve"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textSize="16sp"
+                    app:cornerRadius="200dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

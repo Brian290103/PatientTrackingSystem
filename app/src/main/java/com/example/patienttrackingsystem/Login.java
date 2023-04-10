@@ -21,11 +21,9 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +34,7 @@ import java.util.Map;
 
 public class Login extends AppCompatActivity {
     Animation bottomAnim;
-    TextView call_signUp;
+    TextView call_signUp, btn_patientLogin;
     ImageView image;
     TextView logo, slogan;
 
@@ -49,6 +47,12 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+            finish();
+            startActivity(new Intent(getApplicationContext(), Dashboard.class));
+            return;
+        }
 
         CardView cardView = findViewById(R.id.cardView);
 
@@ -80,12 +84,19 @@ public class Login extends AppCompatActivity {
                 //finish();
             }
         });
+        btn_patientLogin = findViewById(R.id.btn_patientLogin);
+        btn_patientLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Login.this, loginStaff.class));
+            }
+        });
 
 
         n_id = findViewById(R.id.txt_n_id);
         pass = findViewById(R.id.txt_pass);
 
-        login = findViewById(R.id.button);
+        login = findViewById(R.id.btn_loginStaff);
         progressDialog = new ProgressDialog(this);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,11 +104,9 @@ public class Login extends AppCompatActivity {
                 String id_no = n_id.getText().toString();
                 String pwd = pass.getText().toString();
 
-                String URL = "http://172.16.25.26/Android%20Patient%20Tracking%20System/login.php";
-
                 progressDialog.setMessage("Signing in...");
                 progressDialog.show();
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_LOGIN,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -106,15 +115,34 @@ public class Login extends AppCompatActivity {
                                 try {
                                     jsonObject = new JSONObject(response);
 
-                                    String message= jsonObject.getString("message");
-                                    Toast.makeText(Login.this,message, Toast.LENGTH_SHORT).show();
+                                    if (!jsonObject.getBoolean("error")) {
+                                        SharedPrefManager.getInstance(Login.this)
+                                                .userLogIn(
+                                                        jsonObject.getInt("user_id"),
+                                                        jsonObject.getInt("id_no"),
+                                                        jsonObject.getString("fname"),
+                                                        jsonObject.getString("lname"),
+                                                        jsonObject.getString("gender"),
+                                                        jsonObject.getString("phone"),
+                                                        jsonObject.getString("email"),
+                                                        jsonObject.getString("address"),
+                                                        jsonObject.getString("date")
+                                                );
+                                        //Toast.makeText(Login.this, "User Logged In Successfully", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(Login.this, Dashboard.class));
+                                        finish();
+                                    } else {
+                                        Toast.makeText(Login.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
-                                    if(message.equals("Login Succesfull")){
-                                        startActivity(new Intent(Login.this,Dashboard.class));
                                     }
 
+
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    //  e.printStackTrace();
+                                    //Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Login.this, "An Error Occurred, Try Again Later", Toast.LENGTH_SHORT).show();
+
+
                                 }
 
                             }
@@ -130,13 +158,15 @@ public class Login extends AppCompatActivity {
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
                         params.put("id_no", id_no);
-                        params.put("pwd", pwd);
+                        params.put("pass", pwd);
                         return params;
                     }
                 };
 
-                RequestQueue requestQueue = Volley.newRequestQueue(Login.this);
-                requestQueue.add(stringRequest);
+                RequestHandler.getInstance(Login.this).addToRequestQueue(stringRequest);
+
+                //RequestQueue requestQueue = Volley.newRequestQueue(Login.this);
+                // requestQueue.add(stringRequest);
 
                 //   startActivity(new Intent(Login.this,Dashboard.class));
                 //  finish();

@@ -85,7 +85,6 @@ public class Register extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 gender = parent.getItemAtPosition(position).toString();
-                Toast.makeText(Register.this, gender, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -111,30 +110,36 @@ public class Register extends AppCompatActivity {
 
                     if (cpass.equals(pass)) {
 
-                        String URL = "http://172.16.25.26/Android%20Patient%20Tracking%20System/sign_up.php";
-
                         progressDialog.setMessage("Registering User...");
                         progressDialog.show();
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_REGISTER,
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
+                                        //Toast.makeText(Register.this, "Response", Toast.LENGTH_SHORT).show();
+
                                         progressDialog.dismiss();
                                         JSONObject jsonObject = null;
                                         try {
-                                            jsonObject = new JSONObject(response);
+                                         jsonObject = new JSONObject(response);
 
                                             String message = jsonObject.getString("message");
                                             Toast.makeText(Register.this, message, Toast.LENGTH_SHORT).show();
 
+                                            finish();
+                                            startActivity(new Intent(Register.this, Login.class));
+
                                             if (message.equals("User Registered Successfully")) {
                                                 Toast.makeText(Register.this, "Login to Continue", Toast.LENGTH_SHORT).show();
-                                                startActivity(new Intent(Register.this, Login.class));
+                                               // startActivity(new Intent(Register.this, Login.class));
                                                 finish();
                                             }
 
                                         } catch (JSONException e) {
-                                            e.printStackTrace();
+                                            //e.printStackTrace();
+                                            //Toast.makeText(Register.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Register.this, "An Error Occurred, Try Again Later", Toast.LENGTH_SHORT).show();
                                         }
 
                                     }
@@ -143,15 +148,16 @@ public class Register extends AppCompatActivity {
                             public void onErrorResponse(VolleyError error) {
                                 progressDialog.hide();
                                 Toast.makeText(Register.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
                             }
                         }) {
                             @Nullable
                             @Override
                             protected Map<String, String> getParams() throws AuthFailureError {
                                 Map<String, String> params = new HashMap<>();
+                                params.put("id_no", id_no);
                                 params.put("fname", fname);
                                 params.put("lname", lname);
-                                params.put("id_no", id_no);
                                 params.put("gender", gender);
                                 params.put("phone", phone);
                                 params.put("email", email);
@@ -161,8 +167,9 @@ public class Register extends AppCompatActivity {
                             }
                         };
 
-                        RequestQueue requestQueue = Volley.newRequestQueue(Register.this);
-                        requestQueue.add(stringRequest);
+                        // RequestQueue requestQueue = Volley.newRequestQueue(Register.this);
+                       // requestQueue.add(stringRequest);
+                        RequestHandler.getInstance(Register.this).addToRequestQueue(stringRequest );
 
                     } else {
                         Toast.makeText(Register.this, "The Passwords Don't Match. Kindly Try Again", Toast.LENGTH_LONG).show();

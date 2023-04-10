@@ -1,9 +1,12 @@
 package com.example.patienttrackingsystem;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +21,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Dashboard extends AppCompatActivity {
 
@@ -27,24 +42,60 @@ public class Dashboard extends AppCompatActivity {
     private TextView homeTxt, paymentTxt, supportTxt, chatDrTxt;
     private int selectedTab = 1;
 
+    private ImageView btn_notifications;
+
+
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ImageView menu_drawer;
 
+    ImageView logout_btn;
+
+    boolean isNew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        drawerLayout=findViewById(R.id.drawer_layout);
-        navigationView=findViewById(R.id.nav_view);
-        menu_drawer=findViewById(R.id.imageView2);
+
+        if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
+            finish();
+            startActivity(new Intent(getApplicationContext(), Login.class));
+        }
+
+        notificationsPresent();
+
+        btn_notifications = findViewById(R.id.btn_notifications);
+        btn_notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Dashboard.this, Notifications.class));
+
+            }
+        });
+
+        logout_btn = findViewById(R.id.logout_btn);
+        logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPrefManager.getInstance(Dashboard.this).logOut();
+                Toast.makeText(Dashboard.this, "User Logged Out!", Toast.LENGTH_SHORT).show();
+                finish();
+                startActivity(new Intent(getApplicationContext(), Login.class));
+            }
+        });
+
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+
+        navigationView = findViewById(R.id.nav_view);
+        menu_drawer = findViewById(R.id.imageView2);
 
         menu_drawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Dashboard.this, "Clicked", Toast.LENGTH_SHORT).show();
+                drawerLayout.openDrawer(GravityCompat.START);
             }
         });
 
@@ -73,7 +124,7 @@ public class Dashboard extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (selectedTab != 1) {
-                   renderHome();
+                    renderHome();
                 }
 
             }
@@ -205,7 +256,7 @@ public class Dashboard extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-       renderHome();
+        renderHome();
 
     }
 
@@ -237,5 +288,63 @@ public class Dashboard extends AppCompatActivity {
         homeLayout.startAnimation(scaleAnimation);
 
         selectedTab = 1;
+    }
+
+    private void notificationsPresent() {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_GET_NOTIFICATIONS,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = new JSONObject(response);
+
+                            if (!jsonObject.getBoolean("error")) {
+                                JSONArray array = jsonObject.getJSONArray("result");
+
+                                for (int i = 0; i < array.length(); i++) {
+
+                                    JSONObject result = array.getJSONObject(i);
+
+                                    if (result.getInt("isRead") == 0) {
+
+                                        Toast.makeText(Dashboard.this, "There are new notifications", Toast.LENGTH_SHORT).show();
+                                        btn_notifications.setImageResource(R.drawable.baseline_notifications_active_24);
+                                    }
+
+                                }
+
+                            } else {
+                                Toast.makeText(Dashboard.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Dashboard.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(Dashboard.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", Integer.toString(SharedPrefManager.getInstance(Dashboard.this).getUserId()));
+
+                return params;
+            }
+        };
+
+        RequestHandler.getInstance(Dashboard.this).addToRequestQueue(stringRequest);
+
+
     }
 }

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bright_blue">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right"
+        android:orientation="vertical"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/txt_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_outline"
+            android:drawableStart="@drawable/baseline_edit_calendar_24"
+            android:drawablePadding="12dp"
+            android:ems="10"
+            android:focusable="false"
+            android:fontFamily="@font/poppins_regular"
+            android:hint="Select Date:"
+            android:inputType="datetime|text"
+            android:padding="16dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FBFBFB" />
+
+        <EditText
+            android:id="@+id/txt_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_outline"
+            android:drawableStart="@drawable/baseline_access_time_filled_24"
+            android:drawablePadding="12dp"
+            android:ems="10"
+            android:focusable="false"
+            android:fontFamily="@font/poppins_regular"
+            android:hint="Select Time:"
+            android:inputType="datetime|text"
+            android:padding="16dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FBFBFB" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Enter Message:"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/txt_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_outline"
+            android:drawablePadding="12dp"
+            android:ems="10"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="start|top"
+            android:hint="1. Message 1\n2. Message 2\n3. Message 3\n4. Message 4\n5. Message 5"
+            android:inputType="textMultiLine"
+            android:padding="16dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <Button
+            android:id="@+id/btn_appoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#ffffff"
+            android:drawableEnd="@drawable/baseline_schedule_send_24"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="16dp"
+            android:text="Book for an Appointment"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/bright_blue"
+            android:textStyle="bold"
+            app:cornerRadius="8dp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
