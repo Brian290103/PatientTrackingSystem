@@ -93,8 +93,8 @@ public class Login extends AppCompatActivity {
         });
 
 
-        n_id = findViewById(R.id.txt_n_id);
-        pass = findViewById(R.id.txt_pass);
+        n_id = findViewById(R.id.txtEmail);
+        pass = findViewById(R.id.txtPass);
 
         login = findViewById(R.id.btn_loginStaff);
         progressDialog = new ProgressDialog(this);

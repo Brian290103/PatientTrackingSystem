@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -76,8 +77,7 @@ public class NewAppointments extends AppCompatActivity {
                                 for (int i = 0; i < array.length(); i++) {
 
                                     JSONObject result = array.getJSONObject(i);
-
-                                  /*  int id = result.getInt("id");
+                                    int id = result.getInt("id");
                                     int user_id = result.getInt("user_id");
                                     String user_name = result.getString("user_name");
                                     int doctor_id = result.getInt("doctor_id");
@@ -102,9 +102,6 @@ public class NewAppointments extends AppCompatActivity {
 
                                     appointmentsAdapter = new AppointmentsAdapter(NewAppointments.this, appointmentsModels);
                                     recyclerView.setAdapter(appointmentsAdapter);
-                                    
-                                   */
-                                    Toast.makeText(NewAppointments.this, "I better works", Toast.LENGTH_SHORT).show();
 
                                 }
 
@@ -115,6 +112,7 @@ public class NewAppointments extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(NewAppointments.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                          //  Log.d("Tag",e.getMessage());
                         }
 
                     }
@@ -129,7 +127,7 @@ public class NewAppointments extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("doctor_id", "1");
+                params.put("doctor_id", Integer.toString(SharedPrefManager.getInstance(getApplicationContext()).getUserId()));
 
                 return params;
             }

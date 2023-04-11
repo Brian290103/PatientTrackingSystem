@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="32dp">
+
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/bright_blue"
+        android:drawableStart="@drawable/baseline_format_list_numbered_24"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/poppins_medium"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:text="Dr's. Reason for Declination:"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        app:drawableTint="@color/white" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/drComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppins_regular"
+        android:hint="That time may not be appropriate. Kindly reschedule as per my available time.\nThank you."
+        android:inputType="textMultiLine"
+        android:letterSpacing=".1"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+</LinearLayout>

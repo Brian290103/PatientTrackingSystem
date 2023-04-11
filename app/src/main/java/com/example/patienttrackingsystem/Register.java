@@ -17,11 +17,9 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -72,7 +70,7 @@ public class Register extends AppCompatActivity {
         txt_phone = findViewById(R.id.txt_phone);
         txt_email = findViewById(R.id.txt_email);
         txt_address = findViewById(R.id.txt_address);
-        txt_pass = findViewById(R.id.txt_pass);
+        txt_pass = findViewById(R.id.txtPass);
         txt_cpass = findViewById(R.id.txt_cpass);
 
         gender_layout = findViewById(R.id.gender_layout);

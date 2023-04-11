@@ -36,9 +36,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     Context context;
     ArrayList<NotificationModel> notificationModels;
 
-    String notificationId;
     ProgressDialog progressDialog;
-    
+
     public void setSearchList(ArrayList<NotificationModel> notificationModels) {
         this.notificationModels = notificationModels;
         notifyDataSetChanged();
@@ -61,21 +60,20 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull NotificationAdapter.MyViewHolder holder, int position) {
 
 
-        notificationId=notificationModels.get(position).getId()+"";
+
+        NotificationModel currentItem = notificationModels.get(position);
 
         holder.tvId.setText(position + 1 + "");
-        //holder.tvId.setText(notificationId);
-        holder.not_id.setText(notificationId);
         holder.tvReason.setText(notificationModels.get(position).getReason());
         holder.tvTime.setText(notificationModels.get(position).date);
 
         //int colorRes = R.color.soft_green;
 
         if (notificationModels.get(position).isRead) {
-           // holder.btn_markAsRead.setBackgroundColor(colorRes);
+            // holder.btn_markAsRead.setBackgroundColor(colorRes);
             holder.btn_markAsRead.setBackgroundColor(Color.GREEN);
         }
-        
+
 
         holder.btn_markAsRead.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +84,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 progressDialog.setMessage("Updating...");
                 progressDialog.show();
 
-                Toast.makeText(context, "ID: "+notificationId, Toast.LENGTH_SHORT).show();
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_UPDATE_NOTIFICATIONS,
                         new Response.Listener<String>() {
                             @Override
@@ -98,8 +95,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                                     String message = jsonObject.getString("message");
 
                                     if (!jsonObject.getBoolean("error")) {
-                                       // Toast.makeText(context, "Message: "+message, Toast.LENGTH_SHORT).show();
-
+                                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                        context.startActivity(new Intent(context, Dashboard.class));
                                     } else {
                                         Toast.makeText(context, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                                     }
@@ -121,7 +118,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
-                        params.put("id", notificationId);
+                        params.put("id", Integer.toString(currentItem.getId()));
 
                         return params;
                     }
@@ -142,7 +139,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         TextView tvId;
         TextView tvReason;
         TextView tvTime;
-        TextView not_id;
         Button btn_markAsRead;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -150,7 +146,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
             tvReason = itemView.findViewById(R.id.txt_reason);
             tvId = itemView.findViewById(R.id.txt_id);
-            not_id = itemView.findViewById(R.id.not_id);
             tvTime = itemView.findViewById(R.id.txt_notTime);
             btn_markAsRead = itemView.findViewById(R.id.btn_markAsRead);
 

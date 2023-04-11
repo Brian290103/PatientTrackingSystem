@@ -88,7 +88,7 @@
                 app:startIconTint="@color/bright_blue">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txt_n_id"
+                    android:id="@+id/txtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_baseline_dialpad_24"
@@ -114,7 +114,7 @@
                 app:startIconTint="@color/bright_blue">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txt_pass"
+                    android:id="@+id/txtPass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_baseline_lock_24"

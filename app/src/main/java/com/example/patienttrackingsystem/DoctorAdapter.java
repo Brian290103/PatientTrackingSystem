@@ -260,7 +260,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.MyViewHold
     }
 
     private void goToHome() {
-       // startActivity(new Intent(context,Dashboard.class));
+       context.startActivity(new Intent(context,Dashboard.class));
     }
 
     private void createNotificationChannel() {
